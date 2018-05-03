@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Taube"
+                android:textSize="25dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="15dp"
+                android:src="@drawable/taube"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut libero risus, luctus posuere ornare sed, pharetra in orci. Vestibulum consequat diam quis aliquam tincidunt. Aliquam feugiat tellus nec turpis molestie pellentesque. Cras mollis orci ut odio fringilla, id aliquet quam cursus. Mauris suscipit magna dui, a iaculis enim congue in. Nam consectetur nec lacus a varius. In ut eros nisi. Nulla non nisi in tortor elementum fermentum ut non lorem. Morbi quis tempor elit, et suscipit magna. Vestibulum ac est augue. Suspendisse ultrices arcu nunc, ut semper tellus tempor ac. Nulla facilisi. Quisque a urna egestas arcu ullamcorper vestibulum. Cras ante neque, venenatis at dapibus at, auctor vel sem. Suspendisse potenti. Quisque feugiat semper ante, eu sollicitudin quam interdum vitae.
+
+Aenean vel tortor quis ligula placerat dictum. Phasellus augue nisi, aliquet et felis sed, finibus ornare massa. Praesent diam turpis, convallis ac nisl sed, rhoncus laoreet ex. Integer egestas lorem aliquam, bibendum felis et, rhoncus velit. Ut placerat, dui et consequat accumsan, orci lectus aliquet arcu, id lobortis tortor eros vitae sapien. Praesent pulvinar nunc eu dignissim rutrum. Sed sagittis quam nibh, ornare varius purus venenatis non. Donec id pharetra leo, lobortis ullamcorper eros. Duis maximus vestibulum arcu eget vehicula. Mauris aliquet urna fermentum sollicitudin mollis. In vel vestibulum nibh. Aliquam augue enim, sodales a ligula ac, consequat eleifend dolor. Praesent sagittis ut turpis ac cursus. Sed non varius libero, vitae ornare nunc. Aliquam erat volutpat. Suspendisse iaculis sem accumsan, venenatis erat aliquet, sodales augue.
+
+Maecenas egestas odio semper augue iaculis tempor. Sed leo nisi, consequat congue augue vitae, lacinia blandit dolor. Morbi tempus hendrerit blandit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec hendrerit orci enim, in dictum lectus pulvinar quis. Nunc tincidunt arcu a feugiat dapibus. Sed finibus vitae diam sed interdum. Vestibulum rhoncus consequat mi. Nullam dignissim, risus quis pellentesque ullamcorper, ex dolor pulvinar diam, sit amet consequat neque tellus eget ipsum. Nullam sollicitudin, tellus finibus tincidunt tristique, dolor nunc facilisis purus, vel posuere sapien purus sed ligula. Mauris venenatis a tellus non lacinia. Praesent eget enim lectus. Donec tincidunt nisi."
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Spenden"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
