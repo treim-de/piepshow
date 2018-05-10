@@ -107,7 +107,7 @@ public class AddEntryActivity extends AppCompatActivity {
                     String pBody="";
                     pBody+=twoHyphens+boundary+lineEnd;
                     pBody+="Content-Disposition: form-data; name=\"name\"" + lineEnd+lineEnd;
-                    post.put("name", ((EditText) findViewById(R.id.add_title_name)).getText().toString());
+                    pBody+=((EditText) findViewById(R.id.add_title_name)).getText().toString()+lineEnd;
                     post.put("species", "Dummy");
                     post.put("description", ((EditText) findViewById(R.id.add_description_content)).getText().toString());
                     post.put("image", byteimage);
