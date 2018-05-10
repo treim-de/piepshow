@@ -7,42 +7,56 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
 
-import java.io.ByteArrayOutputStream;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class AddEntryActivity extends AppCompatActivity {
-    private String b64image="";
+    private JSONArray byteimage;
+    private String kind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        kind = getIntent().getExtras().getString("kind");
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Eintrag hinzufügen");
+        if (kind.equals("birds")) getSupportActionBar().setTitle("Vogel hinzufügen");
+        else
+            getSupportActionBar().setTitle("Eintrag hinzufügen");
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.send, menu);
         return true;
     }
 
-    public void onCameraClick(View view){
+    public void onCameraClick(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, 427);
         }
     }
 
-    public void onSelectClick(View view){
+    public void onSelectClick(View view) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, 428);
     }
@@ -52,14 +66,13 @@ public class AddEntryActivity extends AppCompatActivity {
         if (requestCode == 427 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            b64image = encodeBmp(imageBitmap);
-        }
-        else if (requestCode == 428 && resultCode == RESULT_OK) {
+            byteimage = M.encodeBmp(imageBitmap);
+        } else if (requestCode == 428 && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             try {
                 // Do whatever you want with this bitmap (image)
                 Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                b64image=encodeBmp(bitmapImage);
+                byteimage = M.encodeBmp(bitmapImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -68,18 +81,66 @@ public class AddEntryActivity extends AppCompatActivity {
         }
     }
 
-    private String encodeBmp(Bitmap bmp){
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String tBody="",tContentType="";
         //Send
-        if(b64image.equals("")){
-            Toast.makeText(this,"Kein Bild ausgewählt",Toast.LENGTH_SHORT).show();
+        if (kind.equals("news")) {
+            tContentType="application/json";
+            try {
+                JSONObject post=new JSONObject();
+                post.put("title", ((EditText) findViewById(R.id.add_title_name)).getText().toString());
+                post.put("content", ((EditText) findViewById(R.id.add_description_content)).getText().toString());
+                post.put("author", "Dummy");
+                tBody=post.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (kind.equals("birds")) {
+            String twoHyphens = "--";
+            String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
+            String lineEnd = "\r\n";
+            tContentType="multipart/form-data; boundary=" + boundary;
+            if (byteimage != null) {
+                try {
+                    String pBody="";
+                    pBody+=twoHyphens+boundary+lineEnd;
+                    pBody+="Content-Disposition: form-data; name=\"name\"" + lineEnd+lineEnd;
+                    post.put("name", ((EditText) findViewById(R.id.add_title_name)).getText().toString());
+                    post.put("species", "Dummy");
+                    post.put("description", ((EditText) findViewById(R.id.add_description_content)).getText().toString());
+                    post.put("image", byteimage);
+                    body=pBody;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        final String body=tBody;
+        final String contenttype=tContentType;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println(body);
+                    HttpURLConnection con = (HttpURLConnection) new URL("http://treim.de:3000/" + kind).openConnection();
+                    con.setRequestMethod("POST");
+                    con.setRequestProperty("Content-Type", "application/json");
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    OutputStream os=con.getOutputStream();
+                    os.write(body.getBytes("UTF-8"));
+                    System.out.println(con.getResponseCode());
+                    con.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
         return true;
     }
 }

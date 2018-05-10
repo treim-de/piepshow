@@ -14,18 +14,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/details_headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Taube"
                 android:textSize="25dp" />
             <ImageView
+                android:id="@+id/details_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:padding="15dp"
                 android:src="@drawable/taube"/>
             <TextView
+                android:id="@+id/details_description"
                 android:layout_width="match_parent"
                 android:padding="15dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut libero risus, luctus posuere ornare sed, pharetra in orci. Vestibulum consequat diam quis aliquam tincidunt. Aliquam feugiat tellus nec turpis molestie pellentesque. Cras mollis orci ut odio fringilla, id aliquet quam cursus. Mauris suscipit magna dui, a iaculis enim congue in. Nam consectetur nec lacus a varius. In ut eros nisi. Nulla non nisi in tortor elementum fermentum ut non lorem. Morbi quis tempor elit, et suscipit magna. Vestibulum ac est augue. Suspendisse ultrices arcu nunc, ut semper tellus tempor ac. Nulla facilisi. Quisque a urna egestas arcu ullamcorper vestibulum. Cras ante neque, venenatis at dapibus at, auctor vel sem. Suspendisse potenti. Quisque feugiat semper ante, eu sollicitudin quam interdum vitae.
@@ -34,11 +37,12 @@ Aenean vel tortor quis ligula placerat dictum. Phasellus augue nisi, aliquet et 
 
 Maecenas egestas odio semper augue iaculis tempor. Sed leo nisi, consequat congue augue vitae, lacinia blandit dolor. Morbi tempus hendrerit blandit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec hendrerit orci enim, in dictum lectus pulvinar quis. Nunc tincidunt arcu a feugiat dapibus. Sed finibus vitae diam sed interdum. Vestibulum rhoncus consequat mi. Nullam dignissim, risus quis pellentesque ullamcorper, ex dolor pulvinar diam, sit amet consequat neque tellus eget ipsum. Nullam sollicitudin, tellus finibus tincidunt tristique, dolor nunc facilisis purus, vel posuere sapien purus sed ligula. Mauris venenatis a tellus non lacinia. Praesent eget enim lectus. Donec tincidunt nisi."
                 android:layout_height="wrap_content" />
-            <Button
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/details_donate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Spenden"/>
+                android:src="@drawable/donate"/>
         </LinearLayout>
     </ScrollView>
 

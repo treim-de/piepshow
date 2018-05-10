@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/entry_image"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"

@@ -53,7 +53,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddClick(View view){
-        startActivity(new Intent(this,AddEntryActivity.class));
+        Intent intent=new Intent(this,AddEntryActivity.class);
+        if(current instanceof BirdFragment){
+            intent.putExtra("kind","birds");
+        }
+        else if (current instanceof NewsFragment){
+            intent.putExtra("kind","news");
+        }
+        startActivity(intent);
     }
 
     @Override
