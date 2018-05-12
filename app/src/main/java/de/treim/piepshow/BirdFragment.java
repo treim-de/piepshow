@@ -44,7 +44,7 @@ public class BirdFragment extends Fragment {
                 JSONArray response;
                 try {
                     response = new JSONArray(M.getRequest("http://treim.de:3000/birds"));
-                    for (int i = 0; i < response.length(); i++) {
+                    for (int i = response.length()-1; i >= 0; i--) {
                         System.out.println("Setting bird " + i);
                         final JSONObject current = response.getJSONObject(i);
                         if (current.getString("description") == null|| current.getString("description").equals("null")) continue;

@@ -12,6 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,12 +36,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 
 public class AddEntryActivity extends AppCompatActivity {
-    private JSONArray byteimage;
+    private byte[] byteimage;
     private String kind;
 
     @Override
@@ -84,61 +98,67 @@ public class AddEntryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String tBody="",tContentType="";
         //Send
         if (kind.equals("news")) {
-            tContentType="application/json";
             try {
-                JSONObject post=new JSONObject();
+                final JSONObject post=new JSONObject();
                 post.put("title", ((EditText) findViewById(R.id.add_title_name)).getText().toString());
                 post.put("content", ((EditText) findViewById(R.id.add_description_content)).getText().toString());
                 post.put("author", "Dummy");
-                tBody=post.toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            System.out.println(post.toString());
+                            HttpURLConnection con = (HttpURLConnection) new URL("http://treim.de:3000/" + kind).openConnection();
+                            con.setRequestMethod("POST");
+                            con.setRequestProperty("Content-Type", "application/json");
+                            con.setDoInput(true);
+                            con.setDoOutput(true);
+                            OutputStream os=con.getOutputStream();
+                            os.write(post.toString().getBytes("UTF-8"));
+                            System.out.println(con.getResponseCode());
+                            con.disconnect();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else if (kind.equals("birds")) {
-            String twoHyphens = "--";
-            String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
-            String lineEnd = "\r\n";
-            tContentType="multipart/form-data; boundary=" + boundary;
-            if (byteimage != null) {
-                try {
-                    String pBody="";
-                    pBody+=twoHyphens+boundary+lineEnd;
-                    pBody+="Content-Disposition: form-data; name=\"name\"" + lineEnd+lineEnd;
-                    pBody+=((EditText) findViewById(R.id.add_title_name)).getText().toString()+lineEnd;
-                    post.put("species", "Dummy");
-                    post.put("description", ((EditText) findViewById(R.id.add_description_content)).getText().toString());
-                    post.put("image", byteimage);
-                    body=pBody;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        final String body=tBody;
-        final String contenttype=tContentType;
+            final HttpClient httpClient = new DefaultHttpClient();
+            final HttpPost post = new HttpPost("http://treim.de:3000/birds");
+            final MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            try {
+                reqEntity.addPart("name", new StringBody(((EditText)findViewById(R.id.add_title_name)).getText().toString()));
+                reqEntity.addPart("species", new StringBody("dummy"));
+                reqEntity.addPart("description", new StringBody(((EditText)findViewById(R.id.add_description_content)).getText().toString()));
+                reqEntity.addPart("image", new ByteArrayBody(byteimage,"image/jpeg","image"));
+                post.setEntity(reqEntity);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HttpResponse response = null;
+                        try {
+                            response = httpClient.execute(post);
+                            final HttpEntity resEntity= response.getEntity();
+                            String response_str = EntityUtils.toString(resEntity);
+                            System.out.println(response_str);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println(body);
-                    HttpURLConnection con = (HttpURLConnection) new URL("http://treim.de:3000/" + kind).openConnection();
-                    con.setRequestMethod("POST");
-                    con.setRequestProperty("Content-Type", "application/json");
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    OutputStream os=con.getOutputStream();
-                    os.write(body.getBytes("UTF-8"));
-                    System.out.println(con.getResponseCode());
-                    con.disconnect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    }
+                }).start();
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-        }).start();
+
+
+        }
 
 
         return true;
