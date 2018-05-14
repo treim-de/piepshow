@@ -146,6 +146,10 @@ public class AddEntryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else if (kind.equals("birds")) {
+            if(byteimage==null){
+                Toast.makeText(getApplicationContext(),"Kein Bild ausgewählt",Toast.LENGTH_SHORT).show();
+                return true;
+            }
             final HttpClient httpClient = new DefaultHttpClient();
             final HttpPost post = new HttpPost("http://treim.de:3000/birds");
             final MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
