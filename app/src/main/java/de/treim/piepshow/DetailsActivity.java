@@ -34,7 +34,7 @@ public class DetailsActivity extends AppCompatActivity {
             findViewById(R.id.details_donate).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String link="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=reim.tobias@gmail.com&item_name=Vogelstation&item_number="+name+"&currency_code=EUR";
+                    String link="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=reim.tobias@gmail.com&item_name=Vogelstation&amount=10&item_number="+name+"&currency_code=EUR";
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                     startActivity(browserIntent);
                 }

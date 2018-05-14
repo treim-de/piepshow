@@ -54,21 +54,6 @@ public class NewsFragment extends Fragment {
                         flowTextView.setText(html);
                         entry.findViewById(R.id.entry_image).setVisibility(View.GONE);
                         entry.setLayoutParams(lp);
-                        entry.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), DetailsActivity.class);
-                                try {
-                                    SharedPreferences.Editor ed=prefs.edit();
-                                    ed.putString("jsonobject",current.toString());
-                                    ed.apply();
-                                    intent.putExtra("id", current.getInt("id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                startActivity(intent);
-                            }
-                        });
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -76,6 +61,12 @@ public class NewsFragment extends Fragment {
                             }
                         });
                     }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            content.findViewById(R.id.bird_loading).setVisibility(View.GONE);
+                        }
+                    });
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

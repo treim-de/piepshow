@@ -20,8 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 import uk.co.deanwild.flowtextview.FlowTextView;
 
 public class BirdFragment extends Fragment {
@@ -44,10 +42,11 @@ public class BirdFragment extends Fragment {
                 JSONArray response;
                 try {
                     response = new JSONArray(M.getRequest("http://treim.de:3000/birds"));
-                    for (int i = response.length()-1; i >= 0; i--) {
+                    for (int i = response.length() - 1; i >= 0; i--) {
                         System.out.println("Setting bird " + i);
                         final JSONObject current = response.getJSONObject(i);
-                        if (current.getString("description") == null|| current.getString("description").equals("null")) continue;
+                        if (current.getString("description") == null || current.getString("description").equals("null"))
+                            continue;
                         final View entry = inflater.inflate(R.layout.bird_entry, null);
                         FlowTextView flowTextView = entry.findViewById(R.id.bird_entry_text);
                         String source = "<html><b>";
@@ -55,16 +54,16 @@ public class BirdFragment extends Fragment {
                         source += current.getString("description") + "</html>";
                         Spanned html = Html.fromHtml(source);
                         flowTextView.setText(html);
-                        Bitmap image=M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
-                        ((ImageView)entry.findViewById(R.id.entry_image)).setImageBitmap(image);
+                        Bitmap image = M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
+                        ((ImageView) entry.findViewById(R.id.entry_image)).setImageBitmap(image);
                         entry.setLayoutParams(lp);
                         entry.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getContext(), DetailsActivity.class);
                                 try {
-                                    SharedPreferences.Editor ed=prefs.edit();
-                                    ed.putString("jsonobject",current.toString());
+                                    SharedPreferences.Editor ed = prefs.edit();
+                                    ed.putString("jsonobject", current.toString());
                                     ed.apply();
                                     intent.putExtra("id", current.getInt("id"));
                                 } catch (JSONException e) {
@@ -80,6 +79,12 @@ public class BirdFragment extends Fragment {
                             }
                         });
                     }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            content.findViewById(R.id.bird_loading).setVisibility(View.GONE);
+                        }
+                    });
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

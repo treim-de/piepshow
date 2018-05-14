@@ -4,6 +4,20 @@
     android:layout_width="match_parent"
     android:background="#926f80ff"
     android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/bird_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#a0000000">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

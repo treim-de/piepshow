@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,8 +54,10 @@ public class AddEntryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (kind.equals("birds")) getSupportActionBar().setTitle("Vogel hinzufügen");
-        else
+        else{
             getSupportActionBar().setTitle("Eintrag hinzufügen");
+            findViewById(R.id.add_image_container).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -109,7 +112,6 @@ public class AddEntryActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            System.out.println(post.toString());
                             HttpURLConnection con = (HttpURLConnection) new URL("http://treim.de:3000/" + kind).openConnection();
                             con.setRequestMethod("POST");
                             con.setRequestProperty("Content-Type", "application/json");
@@ -117,7 +119,23 @@ public class AddEntryActivity extends AppCompatActivity {
                             con.setDoOutput(true);
                             OutputStream os=con.getOutputStream();
                             os.write(post.toString().getBytes("UTF-8"));
-                            System.out.println(con.getResponseCode());
+                            if(con.getResponseCode()==201){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),"Eintrag erstellt",Toast.LENGTH_SHORT).show();
+                                        AddEntryActivity.this.finish();
+                                    }
+                                });
+                            }
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),"Unbekannter Fehler",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                             con.disconnect();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -145,7 +163,23 @@ public class AddEntryActivity extends AppCompatActivity {
                             response = httpClient.execute(post);
                             final HttpEntity resEntity= response.getEntity();
                             String response_str = EntityUtils.toString(resEntity);
-                            System.out.println(response_str);
+                            if(response_str.contains("serverStatus\":2")){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),"Eintrag erstellt",Toast.LENGTH_SHORT).show();
+                                        AddEntryActivity.this.finish();
+                                    }
+                                });
+                            }
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),"Unbekannter Fehler",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
