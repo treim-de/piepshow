@@ -75,7 +75,11 @@ public class BirdFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
+                                try{
+                                    ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
+                                }catch (Exception e){
+                                    System.out.println("Error adding views");
+                                }
                             }
                         });
                     }
