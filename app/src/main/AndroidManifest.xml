@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".DetailsActivity"/>
         <activity android:name=".AddEntryActivity"/>
+        <activity android:name=".ImpressumActivity"/>
     </application>
 
 </manifest>

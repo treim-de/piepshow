@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
@@ -43,22 +42,20 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void setFloatingButton(){
-        if((current instanceof BirdFragment || current instanceof NewsFragment) && prefs.getBoolean("login",false)){
+    public void setFloatingButton() {
+        if ((current instanceof BirdFragment || current instanceof NewsFragment) && prefs.getBoolean("login", false)) {
             findViewById(R.id.fab).setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             findViewById(R.id.fab).setVisibility(View.GONE);
         }
     }
 
-    public void onAddClick(View view){
-        Intent intent=new Intent(this,AddEntryActivity.class);
-        if(current instanceof BirdFragment){
-            intent.putExtra("kind","birds");
-        }
-        else if (current instanceof NewsFragment){
-            intent.putExtra("kind","news");
+    public void onAddClick(View view) {
+        Intent intent = new Intent(this, AddEntryActivity.class);
+        if (current instanceof BirdFragment) {
+            intent.putExtra("kind", "birds");
+        } else if (current instanceof NewsFragment) {
+            intent.putExtra("kind", "news");
         }
         startActivity(intent);
     }
@@ -70,44 +67,50 @@ public class MainActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setCurrentFragment(new NewsFragment());
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overflow, menu);
         return true;
     }
 
-    public void setCurrentFragment(Fragment f){
-        current=f;
+    public void setCurrentFragment(Fragment f) {
+        current = f;
         setFloatingButton();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, current).commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final View view=getLayoutInflater().inflate(R.layout.dialog,null);
-        new AlertDialog.Builder(this).setTitle("Einrichtung")
-                .setView(view)
-                .setPositiveButton("Anmelden", new DialogInterface.OnClickListener() {
+        if (item.getTitle().equals("Login")) {
+            final View view = getLayoutInflater().inflate(R.layout.dialog, null);
+            new AlertDialog.Builder(this).setTitle("Anmeldung")
+                    .setView(view)
+                    .setPositiveButton("Anmelden", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(((EditText)view.findViewById(R.id.login_token)).getText().toString().equals("abc123")){
-                            SharedPreferences.Editor ed=prefs.edit();
-                            ed.putBoolean("login",true);
-                            ed.apply();
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (((EditText) view.findViewById(R.id.login_token)).getText().toString().equals("abc123")) {
+                                SharedPreferences.Editor ed = prefs.edit();
+                                ed.putBoolean("login", true);
+                                ed.apply();
+                            }
+                            setFloatingButton();
                         }
-                        setFloatingButton();
-                    }
-                }).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    }).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            }
-        }).show();
+                }
+            }).show();
+        }
+        else{
+            startActivity(new Intent(this,ImpressumActivity.class));
+        }
         return true;
     }
 }

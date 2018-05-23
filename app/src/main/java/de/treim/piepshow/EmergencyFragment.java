@@ -1,6 +1,7 @@
 package de.treim.piepshow;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -26,7 +27,18 @@ public class EmergencyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (M.hasLocationPermission(getContext())) {
-                    sendMail();
+                    new android.support.v7.app.AlertDialog.Builder(getContext()).setTitle("Einrichtung").setMessage("Ein Foto des Vogels hilft sehr bei der Einschätzung des Notfalls. Bitte öffnen Sie Ihre Kamera-App und nehmen ein Foto auf, bevor Sie den Button betätigen")
+                            .setPositiveButton("Hab ich", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sendMail();
+                                }
+                            }).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
                 }else{
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},

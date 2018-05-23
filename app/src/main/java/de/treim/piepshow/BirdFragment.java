@@ -72,16 +72,16 @@ public class BirdFragment extends Fragment {
                                 startActivity(intent);
                             }
                         });
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
                                     ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
-                                }catch (Exception e){
-                                    System.out.println("Error adding views");
                                 }
-                            }
-                        });
+                            });
+                        } catch (Exception e) {
+                            System.out.println("Error adding views");
+                        }
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

@@ -6,4 +6,9 @@
         android:icon="@drawable/list"
         app:showAsAction="never"
         android:title="Login" />
+    <item
+        android:id="@+id/navigation_impressum"
+        android:icon="@drawable/list"
+        app:showAsAction="never"
+        android:title="Impressum" />
 </menu>
