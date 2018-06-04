@@ -58,9 +58,11 @@ public class BirdFragment extends Fragment {
                             source += current.getString("description") + "</html>";
                             Spanned html = Html.fromHtml(source);
                             flowTextView.setText(html);
-                            if (current.getJSONObject("image") != null) {
+                            try{
                                 Bitmap image = M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
                                 ((ImageView) entry.findViewById(R.id.entry_image)).setImageBitmap(image);
+                            }catch (JSONException e){
+                                System.out.println("No image provided");
                             }
                             entry.setLayoutParams(lp);
                             entry.setOnClickListener(new View.OnClickListener() {

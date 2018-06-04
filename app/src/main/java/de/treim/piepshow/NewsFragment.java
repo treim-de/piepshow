@@ -1,6 +1,5 @@
 package de.treim.piepshow;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -26,25 +25,27 @@ public class NewsFragment extends Fragment {
     View content;
     SharedPreferences prefs;
     LayoutInflater inflater;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.inflater=inflater;
-        content=inflater.inflate(R.layout.fragment_bird,container,false);
+        this.inflater = inflater;
+        content = inflater.inflate(R.layout.fragment_bird, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Neuigkeiten");
-        final LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(15,15,15,15);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Neuigkeiten");
+        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(15, 15, 15, 15);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 JSONArray response;
                 try {
                     response = new JSONArray(M.getRequest("http://treim.de:3000/news"));
-                    for (int i = response.length()-1; i >= 0; i--) {
+                    for (int i = response.length() - 1; i >= 0; i--) {
                         System.out.println("Setting bird " + i);
                         final JSONObject current = response.getJSONObject(i);
-                        if (current.getString("content") == null|| current.getString("content").equals("null")) continue;
+                        if (current.getString("content") == null || current.getString("content").equals("null"))
+                            continue;
                         final View entry = inflater.inflate(R.layout.bird_entry, null);
                         FlowTextView flowTextView = entry.findViewById(R.id.bird_entry_text);
                         String source = "<html><b>";
@@ -52,14 +53,21 @@ public class NewsFragment extends Fragment {
                         source += current.getString("content") + "</html>";
                         Spanned html = Html.fromHtml(source);
                         flowTextView.setText(html);
-                        entry.findViewById(R.id.entry_image).setVisibility(View.GONE);
+                        try {
+                            Bitmap image = M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
+                            ((ImageView) entry.findViewById(R.id.entry_image)).setImageBitmap(image);
+                        } catch (JSONException e) {
+                            entry.findViewById(R.id.entry_image).setVisibility(View.GONE);
+                            System.out.println("No image provided");
+                        }
                         entry.setLayoutParams(lp);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
+                                }
+                            });
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

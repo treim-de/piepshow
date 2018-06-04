@@ -8,33 +8,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Notfall"
-            android:textSize="25dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="15dp"
-            android:text="Beobachte den Vogel:
-Ist er verletzt?
-Ist er bewusstlos?
-Hat er ein raues, abstehendes Gefieder?
-Hat er Flügel und Krallen nicht angelegt?
-Reagiert er nicht bei Annäherung?
-Falls einer der Punkte zutrifft versuche ihn mit einer Decke oder Jacke einzufangen
-Um das Verletzungsrisiko zu reduzieren bedecke die Augen des Vogels, aber halte die Atemwege Frei
-Vermeide zu viele Berührungen um den Stress zu vermindern
-Vor einem Transport unbedingt den Fundort merken
-Transportiert werden kann er in einem gepolsterten Karton mit ausreichend Luftlöchern und möglichst wenig Licht
 
-Was keinesfalls getan werden sollte:
-Den Vogel nicht füttern
-Keine Wärmequellen im Karton platzieren
-Den Vogel nicht töten im Glauben ihm Leid zu ersparen
-"
-            android:layout_height="wrap_content" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:text="Beobachte den Vogel:
+\nIst er verletzt?
+\nIst er bewusstlos?
+\nHat er ein raues, abstehendes Gefieder?
+\nHat er Flügel und Krallen nicht angelegt?
+\nReagiert er nicht bei Annäherung?
+\n\nFalls einer der Punkte zutrifft, versuche ihn mit einer Decke oder Jacke einzufangen
+\nUm das Verletzungsrisiko zu reduzieren bedecke die Augen des Vogels, aber halte die Atemwege frei
+\nVermeide zu viele Berührungen um den Stress zu vermindern
+\nVor einem Transport unbedingt den Fundort merken
+\nTransportiert werden kann er in einem gepolsterten Karton mit ausreichend Luftlöchern und möglichst wenig Licht
+\n
+\nWas keinesfalls getan werden sollte:
+\nDen Vogel nicht füttern
+\nKeine Wärmequellen im Karton platzieren
+\nDen Vogel nicht töten im Glauben ihm Leid zu ersparen"
+                android:layout_height="wrap_content" />
+        </ScrollView>
     </LinearLayout>
 
     <ImageView

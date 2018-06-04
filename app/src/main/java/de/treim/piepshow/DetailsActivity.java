@@ -28,6 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
             JSONObject current=new JSONObject(prefs.getString("jsonobject",""));
             final String name=current.getString("name");
             ((TextView)findViewById(R.id.details_headline)).setText(name);
+            ((TextView)findViewById(R.id.detais_species)).setText(current.getString("species"));
             ((TextView)findViewById(R.id.details_description)).setText(current.getString("description"));
             Bitmap image=M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
             ((ImageView)findViewById(R.id.details_image)).setImageBitmap(image);
