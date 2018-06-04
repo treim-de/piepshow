@@ -21,6 +21,7 @@ public class WebcamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.inflater=inflater;
         content=inflater.inflate(R.layout.fragment_webcam,container,false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Livestream");
         return content;
     }
 }

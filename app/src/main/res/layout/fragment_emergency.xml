@@ -17,15 +17,32 @@
         <TextView
             android:layout_width="match_parent"
             android:padding="15dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut libero risus, luctus posuere ornare sed, pharetra in orci. Vestibulum consequat diam quis aliquam tincidunt. Aliquam feugiat tellus nec turpis molestie pellentesque. Cras mollis orci ut odio fringilla, id aliquet quam cursus. Mauris suscipit magna dui, a iaculis enim congue in. Nam consectetur nec lacus a varius. In ut eros nisi. Nulla non nisi in tortor elementum fermentum ut non lorem. Morbi quis tempor elit, et suscipit magna. Vestibulum ac est augue. Suspendisse ultrices arcundisse potenti. Quisque feugiat semper ante, eu sollicitudin quam interdum vitae."            android:layout_height="wrap_content" />
+            android:text="Beobachte den Vogel:
+Ist er verletzt?
+Ist er bewusstlos?
+Hat er ein raues, abstehendes Gefieder?
+Hat er Flügel und Krallen nicht angelegt?
+Reagiert er nicht bei Annäherung?
+Falls einer der Punkte zutrifft versuche ihn mit einer Decke oder Jacke einzufangen
+Um das Verletzungsrisiko zu reduzieren bedecke die Augen des Vogels, aber halte die Atemwege Frei
+Vermeide zu viele Berührungen um den Stress zu vermindern
+Vor einem Transport unbedingt den Fundort merken
+Transportiert werden kann er in einem gepolsterten Karton mit ausreichend Luftlöchern und möglichst wenig Licht
+
+Was keinesfalls getan werden sollte:
+Den Vogel nicht füttern
+Keine Wärmequellen im Karton platzieren
+Den Vogel nicht töten im Glauben ihm Leid zu ersparen
+"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/emergency_button"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:src="@drawable/mailbutton"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="300dp"/>
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="20dp"/>
 
 </FrameLayout>

@@ -6,6 +6,35 @@
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/details_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vogelname"
+                android:textSize="25dp" />
+            <TextView
+                android:id="@+id/detais_species"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Taube"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_gravity="right"
+            android:id="@+id/details_donate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/donate"/>
+    </FrameLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,13 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/details_headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Taube"
-                android:textSize="25dp" />
+
             <ImageView
                 android:id="@+id/details_image"
                 android:layout_width="match_parent"
@@ -37,12 +60,7 @@ Aenean vel tortor quis ligula placerat dictum. Phasellus augue nisi, aliquet et 
 
 Maecenas egestas odio semper augue iaculis tempor. Sed leo nisi, consequat congue augue vitae, lacinia blandit dolor. Morbi tempus hendrerit blandit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec hendrerit orci enim, in dictum lectus pulvinar quis. Nunc tincidunt arcu a feugiat dapibus. Sed finibus vitae diam sed interdum. Vestibulum rhoncus consequat mi. Nullam dignissim, risus quis pellentesque ullamcorper, ex dolor pulvinar diam, sit amet consequat neque tellus eget ipsum. Nullam sollicitudin, tellus finibus tincidunt tristique, dolor nunc facilisis purus, vel posuere sapien purus sed ligula. Mauris venenatis a tellus non lacinia. Praesent eget enim lectus. Donec tincidunt nisi."
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/details_donate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/donate"/>
+
         </LinearLayout>
     </ScrollView>
 

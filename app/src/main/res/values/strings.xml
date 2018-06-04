@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">piepshow</string>
+    <string name="app_name">Piepshow</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

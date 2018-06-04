@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class EmergencyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.inflater = inflater;
         content = inflater.inflate(R.layout.fragment_emergency, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Notfall");
         content.findViewById(R.id.emergency_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

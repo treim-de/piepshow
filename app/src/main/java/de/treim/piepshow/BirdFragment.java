@@ -39,49 +39,59 @@ public class BirdFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                JSONArray response;
+                JSONArray response = null;
                 try {
                     response = new JSONArray(M.getRequest("http://treim.de:3000/birds"));
+                } catch (JSONException r) {
+                    System.out.println("JSON-String empty");
+                }
                     for (int i = response.length() - 1; i >= 0; i--) {
-                        System.out.println("Setting bird " + i);
-                        final JSONObject current = response.getJSONObject(i);
-                        if (current.getString("description") == null || current.getString("description").equals("null"))
-                            continue;
-                        final View entry = inflater.inflate(R.layout.bird_entry, null);
-                        FlowTextView flowTextView = entry.findViewById(R.id.bird_entry_text);
-                        String source = "<html><b>";
-                        source += current.getString("name") + "</b><br>";
-                        source += current.getString("description") + "</html>";
-                        Spanned html = Html.fromHtml(source);
-                        flowTextView.setText(html);
-                        Bitmap image = M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
-                        ((ImageView) entry.findViewById(R.id.entry_image)).setImageBitmap(image);
-                        entry.setLayoutParams(lp);
-                        entry.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), DetailsActivity.class);
-                                try {
-                                    SharedPreferences.Editor ed = prefs.edit();
-                                    ed.putString("jsonobject", current.toString());
-                                    ed.apply();
-                                    intent.putExtra("id", current.getInt("id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                startActivity(intent);
-                            }
-                        });
                         try {
-                            getActivity().runOnUiThread(new Runnable() {
+                            System.out.println("Setting bird " + i);
+                            final JSONObject current = response.getJSONObject(i);
+                            if (current.getString("description") == null || current.getString("description").equals("null"))
+                                continue;
+                            final View entry = inflater.inflate(R.layout.bird_entry, null);
+                            FlowTextView flowTextView = entry.findViewById(R.id.bird_entry_text);
+                            String source = "<html><b>";
+                            source += current.getString("name") + "</b><br>";
+                            source += current.getString("description") + "</html>";
+                            Spanned html = Html.fromHtml(source);
+                            flowTextView.setText(html);
+                            if (current.getJSONObject("image") != null) {
+                                Bitmap image = M.decodeBmp(current.getJSONObject("image").getJSONArray("data"));
+                                ((ImageView) entry.findViewById(R.id.entry_image)).setImageBitmap(image);
+                            }
+                            entry.setLayoutParams(lp);
+                            entry.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void run() {
-                                    ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getContext(), DetailsActivity.class);
+                                    try {
+                                        SharedPreferences.Editor ed = prefs.edit();
+                                        ed.putString("jsonobject", current.toString());
+                                        ed.apply();
+                                        intent.putExtra("id", current.getInt("id"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    startActivity(intent);
                                 }
                             });
-                        } catch (Exception e) {
-                            System.out.println("Error adding views");
+                            try {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((LinearLayout) content.findViewById(R.id.bird_scroll)).addView(entry);
+                                    }
+                                });
+                            } catch (Exception e) {
+                                System.out.println("Error adding views");
+                            }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
                         }
+
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -89,9 +99,7 @@ public class BirdFragment extends Fragment {
                             content.findViewById(R.id.bird_loading).setVisibility(View.GONE);
                         }
                     });
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
+
             }
         }).start();
 
