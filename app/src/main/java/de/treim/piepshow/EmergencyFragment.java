@@ -64,9 +64,7 @@ public class EmergencyFragment extends Fragment {
         send.setData(uri);
         startActivity(Intent.createChooser(send, "Send mail..."));
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void locationGranted(){
         sendMail();
     }
 }
