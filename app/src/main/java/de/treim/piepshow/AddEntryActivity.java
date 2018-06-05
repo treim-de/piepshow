@@ -2,6 +2,7 @@ package de.treim.piepshow;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -74,7 +76,6 @@ public class AddEntryActivity extends AppCompatActivity {
         } else if (requestCode == 428 && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             try {
-                // Do whatever you want with this bitmap (image)
                 Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 byteimage = M.encodeBmp(bitmapImage);
             } catch (FileNotFoundException e) {
@@ -83,6 +84,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        ((ImageView)findViewById(R.id.add_image)).setImageBitmap(BitmapFactory.decodeByteArray(byteimage, 0, byteimage.length));
     }
 
 
@@ -93,17 +95,18 @@ public class AddEntryActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Kein Bild ausgewählt", Toast.LENGTH_SHORT).show();
             return true;
         }
+        findViewById(R.id.add_loading).setVisibility(View.VISIBLE);
         final HttpClient httpClient = new DefaultHttpClient();
         final MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
         try {
             final HttpPost post;
             if (kind.equals("news")) {
-                post = new HttpPost("http://treim.de:3000/news");
+                post = new HttpPost("https://fhdw.treim.de/news");
                 reqEntity.addPart("title", new StringBody(((EditText) findViewById(R.id.add_title_name)).getText().toString()));
                 reqEntity.addPart("content", new StringBody(((EditText) findViewById(R.id.add_description_content)).getText().toString()));
                 reqEntity.addPart("author", new StringBody("Dummy"));
             } else {
-                post = new HttpPost("http://treim.de:3000/birds");
+                post = new HttpPost("https://fhdw.treim.de/birds");
                 reqEntity.addPart("name", new StringBody(((EditText) findViewById(R.id.add_title_name)).getText().toString()));
                 reqEntity.addPart("species", new StringBody(((EditText) findViewById(R.id.add_species)).getText().toString()));
                 reqEntity.addPart("description", new StringBody(((EditText) findViewById(R.id.add_description_content)).getText().toString()));

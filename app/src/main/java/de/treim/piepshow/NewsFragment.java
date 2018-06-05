@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class NewsFragment extends Fragment {
             public void run() {
                 JSONArray response;
                 try {
-                    response = new JSONArray(M.getRequest("http://treim.de:3000/news"));
+                    response = new JSONArray(M.getRequest("https://fhdw.treim.de/news"));
                     for (int i = response.length() - 1; i >= 0; i--) {
                         System.out.println("Setting bird " + i);
                         final JSONObject current = response.getJSONObject(i);
@@ -77,6 +78,9 @@ public class NewsFragment extends Fragment {
                     });
                 } catch (JSONException e1) {
                     e1.printStackTrace();
+                } catch (Exception e) {
+                    System.out.println("Something went wrong:");
+                    e.printStackTrace();
                 }
             }
         }).start();

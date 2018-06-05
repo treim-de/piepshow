@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (((EditText) view.findViewById(R.id.login_token)).getText().toString().equals("abc123")) {
+                            if (((EditText) view.findViewById(R.id.login_token)).getText().toString().equals("vogelliebe")) {
                                 SharedPreferences.Editor ed = prefs.edit();
                                 ed.putBoolean("login", true);
                                 ed.apply();

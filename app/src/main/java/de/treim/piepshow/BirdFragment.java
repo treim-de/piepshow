@@ -41,7 +41,7 @@ public class BirdFragment extends Fragment {
             public void run() {
                 JSONArray response = null;
                 try {
-                    response = new JSONArray(M.getRequest("http://treim.de:3000/birds"));
+                    response = new JSONArray(M.getRequest("https://fhdw.treim.de/birds"));
                 } catch (JSONException r) {
                     System.out.println("JSON-String empty");
                 }

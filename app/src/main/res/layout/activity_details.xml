@@ -48,8 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:padding="15dp"
-                android:src="@drawable/taube"/>
+                android:padding="15dp"/>
             <TextView
                 android:id="@+id/details_description"
                 android:layout_width="match_parent"

@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
         android:orientation="vertical">
 
         <include
@@ -46,7 +44,32 @@
                         android:layout_height="wrap_content"
                         android:hint="Art / Spezies" />
                 </android.support.design.widget.TextInputLayout>
-
+                <ImageView
+                    android:id="@+id/add_image"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/missingphoto"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" />
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:onClick="onCameraClick"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/take_photo"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:onClick="onSelectClick"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/add_photo"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -61,43 +84,19 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/add_image_container"
+    <FrameLayout
+        android:id="@+id/add_loading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
+        android:visibility="invisible"
+        android:layout_height="match_parent"
+        android:background="#a0FFFFFF">
 
-        <TextView
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Bild auswählen"
-            android:textSize="32dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:onClick="onSelectClick"
-                android:text="Bild auswählen" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:onClick="onCameraClick"
-                android:text="Foto aufnehmen" />
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 </FrameLayout>

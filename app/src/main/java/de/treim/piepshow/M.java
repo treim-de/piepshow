@@ -41,7 +41,7 @@ public class M {
 
     public static byte[] encodeBmp(Bitmap bmp) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 45, byteArrayOS);
         return byteArrayOS.toByteArray();
     }
 
