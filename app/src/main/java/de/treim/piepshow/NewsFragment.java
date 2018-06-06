@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment {
                 JSONArray response;
                 try {
                     response = new JSONArray(M.getRequest("https://fhdw.treim.de/news"));
-                    for (int i = response.length() - 1; i >= 0; i--) {
+                    for (int i=0; i < response.length(); i++) {
                         System.out.println("Setting bird " + i);
                         final JSONObject current = response.getJSONObject(i);
                         if (current.getString("content") == null || current.getString("content").equals("null"))

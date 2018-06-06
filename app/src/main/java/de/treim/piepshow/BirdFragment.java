@@ -45,7 +45,7 @@ public class BirdFragment extends Fragment {
                 } catch (JSONException r) {
                     System.out.println("JSON-String empty");
                 }
-                    for (int i = response.length() - 1; i >= 0; i--) {
+                    for (int i=0; i < response.length(); i++) {
                         try {
                             System.out.println("Setting bird " + i);
                             final JSONObject current = response.getJSONObject(i);
