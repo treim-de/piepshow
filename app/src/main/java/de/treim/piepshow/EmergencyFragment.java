@@ -57,8 +57,7 @@ public class EmergencyFragment extends Fragment {
         String uriText = "mailto:" + Uri.encode("reim.tobias@gmail.com") + "?subject="
                 + Uri.encode("Verletzter Vogel gefunden") + "&body="
                 + Uri.encode("Guten Tag,\r\n\r\nIch habe an folgenden Koordinaten einen verletzten Vogel gefunden:\r\n\r\n" +
-                "Latitude: "+location.getLatitude()+"\r\n" +
-                "Longitude: "+location.getLongitude()+"\r\n\r\n" +
+                "https://www.google.com/maps/search/?api=1&query="+location.getLatitude()+","+location.getLongitude()+"\r\n\r\n"+
         "Mit freundlichen Grüßen");
         Uri uri = Uri.parse(uriText);
         send.setData(uri);
